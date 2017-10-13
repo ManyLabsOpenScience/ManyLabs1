@@ -26,7 +26,7 @@ require("xlsx")
 require("gplots")
 
 # Set some variables ------------------------------------------------------------------------------------------------------------------
-name <- c(study1="Sunk Costs", study2="Gain vs loss framing", study3a="Anchoring - Babies Born", study3b="Anchoring - Mt. Everest", study3c="Anchoring - Chicago",study3d="Anchoring - Distance to NYC",study4="Retrospective gambler fallacy", study5="Low vs high category scales", study6="Norm of reciprocity", study7="Allowed/Forbidden",study8="Quote Attribution", study9="Flag Priming", study10="Currency Priming", study11="Imagined contact", study12a="Sex differences in implicit math attitudes", study12b="Relations between impl. and expl. math attitudes")
+name <- c(study1="Sunk Costs", study2="Gain vs loss framing", study3a="Anchoring - Distance to NYC", study3b="Anchoring - Chicago", study3c="Anchoring - Mt. Everest",study3d="Anchoring - Babies Born",study4="Retrospective gambler fallacy", study5="Low vs high category scales", study6="Norm of reciprocity", study7="Allowed/Forbidden",study8="Quote Attribution", study9="Flag Priming", study10="Currency Priming", study11="Imagined contact", study12a="Sex differences in implicit math attitudes", study12b="Relations between impl. and expl. math attitudes")
 
 # Number of worksheets to read
 nWS    <- 16
@@ -54,18 +54,18 @@ dfOri <- read.xlsx("ML_Original_ES95CI.xls",sheetName="OriginalES95CI",stringsAs
 cnt=0
 
 pdf(paste("noncentralCI.pdf",sep=""),paper="a4r",width=0,height=0)
- 
+
 for(nS in 1:nWS){
   # Replication data
   dfR <- df[[nS]]
- 
+
   # CI for large samples is 99%
   snames <- unique(dfR$Site)
-  
+
   ifelse(nS == 16,{CLi <- sapply(1:nrow(dfR), function(i) ifelse(dfR[i,2]>1000,{CLi=.99},{CLi=.95}))
                    # Correlation
                    dfR  <- escalc(measure="COR", ri=dfR[,4], ni=dfR[,2],slab=snames,data=dfR)
-                   repCI<- sapply(1:nrow(dfR), function(i) ci.sm(sm=r_to_d(r=dfR[i,10],N=dfR[i,2]),N=dfR[i,2], conf.level=CLi[i])) },{ 
+                   repCI<- sapply(1:nrow(dfR), function(i) ci.sm(sm=r_to_d(r=dfR[i,10],N=dfR[i,2]),N=dfR[i,2], conf.level=CLi[i])) },{
                      ifelse(nS%in%chiIND,{
                        # Count data
                        CLi <- sapply(1:nrow(dfR), function(i) ifelse(dfR[i,2]+dfR[i,3]+dfR[i,4]+dfR[i,5]>1000,{CLi=.99},{CLi=.95}))
@@ -79,10 +79,10 @@ for(nS in 1:nWS){
                                                     n1i=RowN1,
                                                     n2i=RowN2,slab=snames, data=dfR)
                        repCI <- sapply(1:nrow(dfR), function(i) ci.smd(smd=dfR[i,11],n.1=RowN1[i],n.2=RowN2[i],conf.level=CLi[i]))},{
-                         # Data with mean and sd 
+                         # Data with mean and sd
                          CLi <- sapply(1:nrow(dfR), function(i) ifelse(dfR[i,2]+dfR[i,3]>1000,{CLi=.99},{CLi=.95}))
                          dfR  <- escalc(measure="SMD", m1i=dfR[,5], m2i=dfR[,6], sd1i=dfR[,7], sd2i=dfR[,8], n1i=dfR[,2], n2i=dfR[,3],slab=snames,data=dfR)
-                         repCI<- sapply(1:nrow(dfR), function(i) ci.smd(smd=dfR[i,17], n.1=dfR[i,2], n.2=dfR[i,3], conf.level=CLi[i]))}) 
+                         repCI<- sapply(1:nrow(dfR), function(i) ci.smd(smd=dfR[i,17], n.1=dfR[i,2], n.2=dfR[i,3], conf.level=CLi[i]))})
                    })
 
 # Cast and cast and cast, all to get a dataframe with numeric numbers. Yep

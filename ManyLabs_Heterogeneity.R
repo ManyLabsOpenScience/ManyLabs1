@@ -12,6 +12,9 @@
 # Prepared by F.Hasselman for the Manylabs project https://openscienceframework.org/project/WX7Ck/
 # Contact me if you find any errors: me@fredhasselman.com
 
+# 13-10-2017 Thanks to Uri Simonsohn for pointing out an error in results: The labels in the output of the Anchoring studies were reversed and this leads to the wrong statistics ending up in the wrong place in the results tables. This version of the scripted has been corrected.
+
+
 # Load required packages --------------------------------------------------------------------------------------------------------------
 require("gplots")
 require("metafor")
@@ -19,7 +22,7 @@ require("xlsx")
 
 
 # Set some variables ------------------------------------------------------------------------------------------------------------------
-name <- c(study1="Sunk Costs", study2="Gain vs loss framing", study3a="Anchoring - Babies Born", study3b="Anchoring - Mt. Everest", study3c="Anchoring - Chicago",study3d="Anchoring - Distance to NYC",study4="Retrospective gambler fallacy", study5="Low vs high category scales", study6="Norm of reciprocity", study7="Allowed/Forbidden",study8="Quote Attribution", study9="Flag Priming", study10="Currency Priming", study11="Imagined contact", study12a="Sex differences in implicit math attitudes", study12b="Relations between impl. and expl. math attitudes")
+name <- c(study1="Sunk Costs", study2="Gain vs loss framing", study3a="Anchoring - Distance to NYC", study3b="Anchoring - Chicago", study3c="Anchoring - Mt. Everest",study3d="Anchoring - Babies Born",study4="Retrospective gambler fallacy", study5="Low vs high category scales", study6="Norm of reciprocity", study7="Allowed/Forbidden",study8="Quote Attribution", study9="Flag Priming", study10="Currency Priming", study11="Imagined contact", study12a="Sex differences in implicit math attitudes", study12b="Relations between impl. and expl. math attitudes")
 
 # Number of worksheets to read
 nWS    <- 16
