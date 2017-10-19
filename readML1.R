@@ -1,12 +1,15 @@
 library(rio)
 library(plyr)
-library(dplyr)
+library(tidyverse)
 
-fileName <- "Full_Dataset_De-Identified.sav"
+#fileName <- "Full_Dataset_De-Identified.sav"
 
 fileName <- "CleanedDataset.sav"
 
 df <- import(paste0(getwd(),"/Data/",fileName))
+
+df <- df %>% select(starts_with("anchoring"))
+
 
 # e.g. "uva" == 31
 df.sub <- filter(df, df$sample==31)
